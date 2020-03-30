@@ -14,6 +14,7 @@ import Popup from './components/Popup.js';
 import Menu from './components/Menu.js';
 import BeatLoader from "react-spinners/BeatLoader";
 import { MuiThemeProvider as ThemeProvider  } from '@material-ui/core/styles';
+import FocusTrap from 'focus-trap-react';
 
 
 class App extends React.Component {
@@ -130,14 +131,19 @@ class App extends React.Component {
       <ThemeProvider theme={ this.theme }>
         <div className="App">
           <div className='App__inner'>
-            <Header
-              page={ {
-                home: this.state.home,
-                about: false,
-                stats: false,
-              } }
-              toggleMenu={ this.toggleMenu }/>
-            <Menu home={ this.state.home } closeMenu={ this.toggleMenu } goHome={ this.switchHome } showMenu={ this.state.menu } />
+            <FocusTrap active={ this.state.menu }>
+              <div className='FocusTrap__div'>
+                <Header
+                  page={ {
+                    home: this.state.home,
+                    about: false,
+                    stats: false,
+                    menu: this.state.menu,
+                  } }
+                  toggleMenu={ this.toggleMenu }/>
+                <Menu home={ this.state.home } closeMenu={ this.toggleMenu } goHome={ this.switchHome } showMenu={ this.state.menu } />
+              </div>
+            </FocusTrap>
             <Router>
               { this.state.home
                 ? <Redirect to='/'/>

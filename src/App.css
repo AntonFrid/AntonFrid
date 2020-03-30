@@ -8,7 +8,12 @@ h3 {
   color: #99aab5;
 }
 
-h2, p {
+h2 {
+  color: white;
+  /* margin-left: 16px; */
+}
+
+p {
   color: white;
 }
 
@@ -124,6 +129,10 @@ h2, p {
   align-items: center;
 }
 
+.FocusTrap__div {
+  height: 100%;
+}
+
 .Popup {
   position: absolute;
   top: 0;
@@ -199,10 +208,16 @@ h2, p {
   background-color: #282b30;
   z-index: 2;
   box-shadow: 0px 6px 6px -3px black;
+  border: 0px solid transparent;
   transition: 0.15s;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+}
+
+.Menu__visible__border {
+  border-right: 1px solid #7289da;
+  transition: 0.15s;
 }
 
 .Menu__hidden {
@@ -253,4 +268,10 @@ h2, p {
 
 .Main .FormLabel {
   color: #99aab5;
+}
+
+.hidden__button {
+  height: 1px;
+  width: 1px;
+  opacity: 0;
 }
