@@ -7,7 +7,12 @@ class Menu extends React.Component {
   constructor(props) {
     super(props);
 
-    this.onClick = this.onClick.bind(this);
+    this.overlay = React.createRef();
+    this.menu = React.createRef();
+    this.homeBtn = React.createRef();
+
+    this.onClickHome = this.onClickHome.bind(this);
+    this.onClickAbout = this.onClickAbout.bind(this);
     this.onFocus = this.onFocus.bind(this);
     this.onBlur = this.onBlur.bind(this);
     this.focusHome = this.focusHome.bind(this);
@@ -16,7 +21,7 @@ class Menu extends React.Component {
     this.onMouseLeave = this.onMouseLeave.bind(this);
   }
 
-  onClick() {
+  onClickHome() {
     if(this.props.home) {
       this.props.closeMenu()
     }else {
@@ -25,33 +30,42 @@ class Menu extends React.Component {
     }
   }
 
+  onClickAbout() {
+    if(this.props.about) {
+      this.props.closeMenu()
+    }else {
+      this.props.goAbout()
+      this.props.closeMenu()
+    }
+  }
+
   onClickOverlay(e) {
-    if(e.target === this.refs.overlay) {
+    if(e.target === this.overlay.current) {
       this.props.closeMenu();
     }
   }
 
   onFocus() {
-    this.refs.menu.classList.add('Menu__visible__border');
+    this.menu.current.classList.add('Menu__visible__border');
   }
 
   focusHome() {
-    this.refs.homeBtn.focus();
+    this.homeBtn.current.focus();
   }
 
   onBlur() {
-    this.refs.menu.classList.remove('Menu__visible__border');
+    this.menu.current.classList.remove('Menu__visible__border');
   }
 
   onMouseEnter(e) {
-    if(e.target === this.refs.overlay) {
-      this.refs.menu.classList.add('Menu__visible__border');
+    if(e.target === this.overlay.current && this.props.showMenu) {
+      this.menu.current.classList.add('Menu__visible__border');
     }
   }
 
   onMouseLeave(e) {
-    if(e.target === this.refs.overlay) {
-      this.refs.menu.classList.remove('Menu__visible__border');
+    if(e.target === this.overlay.current) {
+      this.menu.current.classList.remove('Menu__visible__border');
     }
   }
 
@@ -60,11 +74,11 @@ class Menu extends React.Component {
   render() {
     return (
       <>
-        <div onMouseOver={ this.onMouseEnter} onMouseOut={ this.onMouseLeave } ref='overlay' onClick={ this.onClickOverlay } className={ this.props.showMenu ? 'Menu__overlay' : 'Menu__overlay__hidden'}>
-          <div ref='menu' className={ this.props.showMenu ? 'Menu__visible' : 'Menu__hidden' }>
-            <Button ref='homeBtn' onClick={ this.onClick } className='Button'>Home screen</Button>
+        <div onMouseOver={ this.onMouseEnter} onMouseOut={ this.onMouseLeave } ref={ this.overlay }onClick={ this.onClickOverlay } className={ this.props.showMenu ? 'Menu__overlay' : 'Menu__overlay__hidden'}>
+          <div ref={ this.menu } className={ this.props.showMenu ? 'Menu__visible' : 'Menu__hidden' }>
+            <Button ref={ this.homeBtn } onClick={ this.onClickHome } className='Button'>Home screen</Button>
             <Button className='Button'>Stats</Button>
-            <Button className='Button'>About this app</Button>
+            <Button onClick={ this.onClickAbout } className='Button'>About this app</Button>
           </div>
         </div>
         { this.props.showMenu ? <button onBlur={ this.onBlur } onFocus={ this.onFocus } onClick={ this.props.closeMenu } className='hidden__button'></button> : null }

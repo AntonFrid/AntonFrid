@@ -7,7 +7,7 @@ class Header extends React.Component {
   render() {
     return (
       <div className='Header'>
-        <Hamburger toggleMenu={ this.props.toggleMenu }/>
+        <Hamburger menuBool={ this.props.page.menu } toggleMenu={ this.props.toggleMenu }/>
         <h2>
           {
             this.props.page.menu

@@ -15,6 +15,7 @@ h2 {
 
 p {
   color: white;
+  max-width: 333px;
 }
 
 .App {
@@ -46,6 +47,12 @@ p {
   justify-content: space-around;
 }
 
+.Main h1 {
+  position: absolute;
+  top: 20px;
+  color: white;
+}
+
 .Main > .Button {
   background-color: #7289da;
   color: white;
@@ -60,11 +67,20 @@ p {
   background-color: #7289da;;
   color: white;
   margin: 15px auto;
+  transition: 0.15s;
 }
 
 .Quiz .Button:hover {
   background-color: #8CA3F4;
   color: white;
+}
+
+.Quiz .Button_disabled {
+  background-color: #7289da;;
+  color: white;
+  margin: 15px auto;
+  opacity: 0.3;
+  transition: 0.15s;
 }
 
 .Quiz {
@@ -149,7 +165,8 @@ p {
 .Popup .Button {
   color: #7289da;
   margin-right: 10px;
-  font-size: 11px;
+  margin-bottom: 5px;
+  font-size: 12px;
 }
 
 .Popup .Button:hover {
@@ -160,7 +177,7 @@ p {
 .Popup form {
   background-color: #282b30;
   box-shadow: 0px 0px 8px -5px black;
-  height: 30%;
+  height: 25%;
   width: 80%;
   border-radius: 5px;
   display: flex;
@@ -191,6 +208,11 @@ p {
 }
 
 .Hamburger:hover {
+  color: #7289da;
+  transition: 0.15s;
+}
+
+.Hamburger:focus {
   color: #7289da;
   transition: 0.15s;
 }
@@ -274,4 +296,21 @@ p {
   height: 1px;
   width: 1px;
   opacity: 0;
+}
+
+.RadioGroup {
+  margin-left: 75px;
+  margin-top: 20px;
+}
+
+.About {
+  position: absolute;
+  top: 100px;
+  width: 300px;
+  margin-left: -150px;
+  left: 50%;
+}
+
+.About > h2 {
+  color: #99aab5;
 }

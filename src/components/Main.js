@@ -36,9 +36,10 @@ class Main extends React.Component {
 
     return (
       <div className='Main'>
+        <h1>Random quiz!</h1>
         <FormControl component="fieldset">
-          <FormLabel className='FormLabel' component="legend">Choose the amount of questions</FormLabel>
-          <RadioGroup defaultValue='5' aria-label="amount" name='amount' onChange={ (e) => this.props.updateAmount(e.target.value) }>
+          <FormLabel className='FormLabel' component="legend">Choose the amount of questions.</FormLabel>
+          <RadioGroup className='RadioGroup' defaultValue='5' aria-label="amount" name='amount' onChange={ (e) => this.props.updateAmount(e.target.value) }>
             <FormControlLabel className='Radio__label' value='5' control={<Radio />} label='Five' />
             <FormControlLabel className='Radio__label' value='10' control={<Radio />} label='Ten' />
             <FormControlLabel className='Radio__label' value='15' control={<Radio />} label='Fifteen' />

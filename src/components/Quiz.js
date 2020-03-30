@@ -19,7 +19,7 @@ class Quiz extends React.Component {
     return array.sort(() => Math.random() - 0.5);
   }
 
-  shouldComponentUpdate(nextProps) {
+  shouldComponentUpdate(nextProps, nextState) {
     if(nextProps.quizArr === this.props.quizArr) return false;
 
     return true;
@@ -56,11 +56,15 @@ class Quiz extends React.Component {
               this.props.quizArr.map((value, index) => {
                 let answers = this.shuffle(value.incorrect_answers.concat(value.correct_answer));
 
+                if(this.props.answersArr.length < this.props.quizArr.length) {
+                  this.props.addAnswer(answers[0], index);
+                }
+
                 return (
                   <div key={'question-' + index} className='Quiz__question'>
                     <h3>Question {index + 1}</h3>
                     <p>Q{index + 1}. { this.convertHTML(value.question) }</p>
-                    <RadioGroup aria-label="answers" name={'answers' + index } onChange={ (e) => this.props.addAnswer(e.target.value, index) }>
+                    <RadioGroup defaultValue={ answers[0] } aria-label="answers" name={'answers' + index } onChange={ (e) => this.props.addAnswer(e.target.value, index) }>
                       { answers.map((value, index) => {
                         return <FormControlLabel key={ value + index } className='Radio__label' value={ value } control={<Radio />} label={ this.convertHTML(value) } />
                       })}
@@ -70,7 +74,11 @@ class Quiz extends React.Component {
               })
             }
             { this.props.quizArr.length > 0
-              ? <Button type="submit" variant="contained" className='Button'>
+              ? <Button
+                  type="submit"
+                  variant="contained"
+                  className='Button'
+                >
                   Check Answers
                 </Button>
               : null

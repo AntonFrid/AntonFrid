@@ -12,6 +12,7 @@ import Quiz from './components/Quiz.js';
 import Header from './components/Header.js';
 import Popup from './components/Popup.js';
 import Menu from './components/Menu.js';
+import About from './components/About.js';
 import BeatLoader from "react-spinners/BeatLoader";
 import { MuiThemeProvider as ThemeProvider  } from '@material-ui/core/styles';
 import FocusTrap from 'focus-trap-react';
@@ -30,6 +31,7 @@ class App extends React.Component {
       questionAmount: 5,
       loading: false,
       fade: true,
+      about: false,
     };
 
     this.answersArr = [];
@@ -58,6 +60,7 @@ class App extends React.Component {
     this.spawnPopupRestart = this.spawnPopupRestart.bind(this);
     this.toggleMenu = this.toggleMenu.bind(this);
     this.switchHome = this.switchHome.bind(this);
+    this.switchAbout = this.switchAbout.bind(this);
     this.fetchQuiz = this.fetchQuiz.bind(this);
     this.addAnswer = this.addAnswer.bind(this);
     this.changeQuestionAmount = this.changeQuestionAmount.bind(this);
@@ -67,7 +70,7 @@ class App extends React.Component {
   spawnPopup(correctCount) {
     if(this.state.popup) {
       this.answersArr = [];
-      this.setState({ popup: false, correctCount: 0, home: true, quizArr: [], fade: true });
+      this.setState({ popup: false, correctCount: 0, home: true, about: false ,quizArr: [], fade: true });
     }else {
       this.setState({ popup: true, correctCount: correctCount });
     }
@@ -94,7 +97,17 @@ class App extends React.Component {
     if(this.state.home) {
       this.setState({ home: false });
     }else {
-      this.setState({ home: true, quizArr: [], correctCount: 0 })
+      this.answersArr = [];
+      this.setState({ home: true, about: false, quizArr: [], correctCount: 0 })
+    }
+  }
+
+  switchAbout() {
+    if(this.state.about) {
+      this.setState({ about: false });
+    }else {
+      this.answersArr = [];
+      this.setState({ about: true, home: false, quizArr: [], correctCount: 0 })
     }
   }
 
@@ -136,12 +149,13 @@ class App extends React.Component {
                 <Header
                   page={ {
                     home: this.state.home,
-                    about: false,
+                    about: this.state.about,
                     stats: false,
                     menu: this.state.menu,
                   } }
-                  toggleMenu={ this.toggleMenu }/>
-                <Menu home={ this.state.home } closeMenu={ this.toggleMenu } goHome={ this.switchHome } showMenu={ this.state.menu } />
+                  toggleMenu={ this.toggleMenu }
+                />
+                <Menu about={ this.state.about } home={ this.state.home } closeMenu={ this.toggleMenu } goAbout={ this.switchAbout } goHome={ this.switchHome } showMenu={ this.state.menu } />
               </div>
             </FocusTrap>
             <Router>
@@ -149,8 +163,13 @@ class App extends React.Component {
                 ? <Redirect to='/'/>
                 : null
               }
+              { this.state.about
+                ? <Redirect to='/about'/>
+                : null
+              }
               <Route exact path='/' render={(props) => <Main updateAmount={ this.changeQuestionAmount } fetchQuiz={ this.fetchQuiz } switchHome={ this.switchHome }/>} />
               <Route path='/quiz' render={(props) => <Quiz onScroll={ this.handleScroll } amount={ this.state.questionAmount } answersArr={ this.answersArr } addAnswer={ this.addAnswer } quizArr={ this.state.quizArr } spawnPopup={ this.spawnPopup }/>} />
+              <Route path='/about' render={(props) => <About/>}/>
             </Router>
             <div className={ !this.state.home
                 ? (this.state.fade ? 'fade__overlay' : 'fade__overlay__hidden')
