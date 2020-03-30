@@ -8,7 +8,7 @@ h3 {
   color: #99aab5;
 }
 
-p {
+h2, p {
   color: white;
 }
 
@@ -84,16 +84,31 @@ p {
   margin-left: 7.5%;
 }
 
-/* .fade__overlay:before {
-content:'';
-width:100%;
-height:100%;
-position:absolute;
-left:0;
-top:0;
-background: linear-gradient(transparent 500px, #424549);
-pointer-events: none;
-} */
+.fade__overlay {
+  content: '';
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  background: linear-gradient(transparent 500px, #424549);
+  pointer-events: none;
+  opacity: 1;
+  transition: 0.15s;
+}
+
+.fade__overlay__hidden {
+  content: '';
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  background: linear-gradient(transparent 500px, #424549);
+  pointer-events: none;
+  opacity: 0;
+  transition: 0.15s;
+}
 
 .Radio__label {
   color: white;

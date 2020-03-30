@@ -13,7 +13,8 @@ import Header from './components/Header.js';
 import Popup from './components/Popup.js';
 import Menu from './components/Menu.js';
 import BeatLoader from "react-spinners/BeatLoader";
-import ThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
+import { MuiThemeProvider as ThemeProvider  } from '@material-ui/core/styles';
+
 
 class App extends React.Component {
   constructor(props) {
@@ -27,6 +28,7 @@ class App extends React.Component {
       quizArr: [],
       questionAmount: 5,
       loading: false,
+      fade: true,
     };
 
     this.answersArr = [];
@@ -38,13 +40,13 @@ class App extends React.Component {
       marginLeft: '50%',
       top: '-15px',
       marginTop: '100%',
-      borderColor: 'red',
+      borderColor: '#7289da',
     };
 
     this.theme = createMuiTheme({
       palette: {
-        primary: { 500: '#99aab5' },
-        secondary: { A400: '#7289da' },
+        primary: { main: '#99aab5' },
+        secondary: { main: '#7289da' },
       },
       status: {
         danger: 'orange',
@@ -58,12 +60,13 @@ class App extends React.Component {
     this.fetchQuiz = this.fetchQuiz.bind(this);
     this.addAnswer = this.addAnswer.bind(this);
     this.changeQuestionAmount = this.changeQuestionAmount.bind(this);
+    this.handleScroll = this.handleScroll.bind(this);
   }
 
   spawnPopup(correctCount) {
     if(this.state.popup) {
       this.answersArr = [];
-      this.setState({ popup: false, correctCount: 0, home: true, quizArr: [] });
+      this.setState({ popup: false, correctCount: 0, home: true, quizArr: [], fade: true });
     }else {
       this.setState({ popup: true, correctCount: correctCount });
     }
@@ -72,7 +75,7 @@ class App extends React.Component {
   spawnPopupRestart(correctCount) {
     if(this.state.popup) {
       this.answersArr = [];
-      this.setState({ popup: false, correctCount: 0, quizArr: [] });
+      this.setState({ popup: false, correctCount: 0, quizArr: [], fade: true });
     }else {
       this.setState({ popup: true, correctCount: correctCount });
     }
@@ -90,7 +93,7 @@ class App extends React.Component {
     if(this.state.home) {
       this.setState({ home: false });
     }else {
-      this.setState({ home: true })
+      this.setState({ home: true, quizArr: [], correctCount: 0 })
     }
   }
 
@@ -111,27 +114,48 @@ class App extends React.Component {
     this.setState({ questionAmount: amount })
   }
 
+  handleScroll(e) {
+    const bottom = e.target.scrollHeight - (e.target.scrollTop + 1) < e.target.clientHeight;
+
+    if (bottom && this.state.fade && e.target.scrollTop !== 0) {
+      this.setState({ fade: false });
+    }
+    else if(!bottom && !this.state.fade) {
+      this.setState({ fade: true });
+    }
+  }
+
   render() {
     return (
       <ThemeProvider theme={ this.theme }>
         <div className="App">
           <div className='App__inner'>
-            <Header toggleMenu={ this.toggleMenu }/>
-            <Menu showMenu={ this.state.menu } />
+            <Header
+              page={ {
+                home: this.state.home,
+                about: false,
+                stats: false,
+              } }
+              toggleMenu={ this.toggleMenu }/>
+            <Menu home={ this.state.home } closeMenu={ this.toggleMenu } goHome={ this.switchHome } showMenu={ this.state.menu } />
             <Router>
               { this.state.home
                 ? <Redirect to='/'/>
                 : null
               }
               <Route exact path='/' render={(props) => <Main updateAmount={ this.changeQuestionAmount } fetchQuiz={ this.fetchQuiz } switchHome={ this.switchHome }/>} />
-              <Route path='/quiz' render={(props) => <Quiz amount={ this.state.questionAmount } answersArr={ this.answersArr } addAnswer={ this.addAnswer } quizArr={ this.state.quizArr } spawnPopup={ this.spawnPopup }/>} />
+              <Route path='/quiz' render={(props) => <Quiz onScroll={ this.handleScroll } amount={ this.state.questionAmount } answersArr={ this.answersArr } addAnswer={ this.addAnswer } quizArr={ this.state.quizArr } spawnPopup={ this.spawnPopup }/>} />
             </Router>
-            <div className='fade__overlay'></div>
+            <div className={ !this.state.home
+                ? (this.state.fade ? 'fade__overlay' : 'fade__overlay__hidden')
+                : 'fade__overlay__hidden'
+              }>
+            </div>
             { this.state.popup ? <Popup amount={ this.state.questionAmount } fetchQuiz={ this.fetchQuiz } correctCount={ this.state.correctCount } close={ this.spawnPopup } restart={ this.spawnPopupRestart }/> : null }
             <BeatLoader
               css={this.overrideCSS}
               size={30}
-              color={"#7289da"}
+              color={"#99aab5"}
               loading={this.state.loading}
             />
           </div>

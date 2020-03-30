@@ -1,5 +1,4 @@
 import React from 'react';
-import { Redirect } from 'react-router-dom';
 import 'typeface-roboto';
 
 //Components
@@ -20,6 +19,12 @@ class Quiz extends React.Component {
     return array.sort(() => Math.random() - 0.5);
   }
 
+  shouldComponentUpdate(nextProps) {
+    if(nextProps.quizArr === this.props.quizArr) return false;
+
+    return true;
+  }
+
   checkAnswers(e) {
     e.preventDefault();
     let correctCount = 0;
@@ -33,9 +38,18 @@ class Quiz extends React.Component {
     this.props.spawnPopup(correctCount);
   }
 
+  convertHTML(str) {
+    return str.replace(/&amp;/g, "&")
+      .replace(/&lt;/g, "<")
+      .replace(/&gt;/g, ">")
+      .replace(/&quot;/g, "\"")
+      .replace(/&apos;/g, "'")
+      .replace(/&#039;/g,"'");
+  }
+
   render() {
     return (
-      <div className='Quiz'>
+      <div onScroll={ this.props.onScroll } className='Quiz'>
         <form onSubmit={ this.checkAnswers }>
           <FormControl component="fieldset">
             {
@@ -45,10 +59,10 @@ class Quiz extends React.Component {
                 return (
                   <div key={'question-' + index} className='Quiz__question'>
                     <h3>Question {index + 1}</h3>
-                    <p>Q{index + 1}. {value.question}</p>
+                    <p>Q{index + 1}. { this.convertHTML(value.question) }</p>
                     <RadioGroup aria-label="answers" name={'answers' + index } onChange={ (e) => this.props.addAnswer(e.target.value, index) }>
                       { answers.map((value, index) => {
-                        return <FormControlLabel key={ value + index } className='Radio__label' value={ value } control={<Radio />} label={ value } />
+                        return <FormControlLabel key={ value + index } className='Radio__label' value={ value } control={<Radio />} label={ this.convertHTML(value) } />
                       })}
                     </RadioGroup>
                   </div>

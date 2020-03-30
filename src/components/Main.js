@@ -19,6 +19,10 @@ class Main extends React.Component {
     this.onClick = this.onClick.bind(this);
   }
 
+  componentDidMount() {
+    this.props.updateAmount(5);
+  }
+
   onClick() {
     this.setState({ redirect: true });
     this.props.fetchQuiz();
@@ -34,7 +38,7 @@ class Main extends React.Component {
       <div className='Main'>
         <FormControl component="fieldset">
           <FormLabel className='FormLabel' component="legend">Choose the amount of questions</FormLabel>
-          <RadioGroup aria-label="amount" name='amount' onChange={ (e) => this.props.updateAmount(e.target.value) }>
+          <RadioGroup defaultValue='5' aria-label="amount" name='amount' onChange={ (e) => this.props.updateAmount(e.target.value) }>
             <FormControlLabel className='Radio__label' value='5' control={<Radio />} label='Five' />
             <FormControlLabel className='Radio__label' value='10' control={<Radio />} label='Ten' />
             <FormControlLabel className='Radio__label' value='15' control={<Radio />} label='Fifteen' />
