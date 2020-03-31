@@ -189,8 +189,8 @@ class App extends React.Component {
               <Route path='/stats' render={(props) => <Stats/>}/>
             </Router>
             <div className={ !this.state.home
-                ? (this.state.fade ? 'fade__overlay' : 'fade__overlay__hidden')
-                : 'fade__overlay__hidden'
+                ? (!this.state.stats ? (this.state.fade ? 'fade__overlay' : 'fade__overlay__hidden')
+                : 'fade__overlay__hidden') : 'fade__overlay__hidden'
               }>
             </div>
             { this.state.popup ? <Popup amount={ this.state.questionAmount } fetchQuiz={ this.fetchQuiz } correctCount={ this.state.correctCount } close={ this.spawnPopup } restart={ this.spawnPopupRestart }/> : null }

@@ -45,7 +45,7 @@ class Quiz extends React.Component {
     for (let i = 0; i < this.props.answersArr.length; i++) {
       if(this.props.answersArr[i] === this.props.quizArr[i].correct_answer) correctCount++;
     }
-    console.log(stats$.value);
+    
     this.props.spawnPopup(correctCount);
 
     if(stats$.value === null) {
