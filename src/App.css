@@ -4,7 +4,7 @@
   font-family: 'Roboto', sans-serif;
 }
 
-h3 {
+h3, h4 {
   color: #99aab5;
 }
 
@@ -312,5 +312,36 @@ p {
 }
 
 .About > h2 {
+  text-align: center;
   color: #99aab5;
+}
+
+.About__copyright {
+  text-align: center;
+  position: absolute;
+  margin-left: -150px;
+  bottom: -45px;
+  left: 50%;
+  width: 300px;
+  font-size: 14px;
+  color: #99aab5;
+  border-top: 1px solid #36393e;
+  padding-top: 10px;
+}
+
+.Stats {
+  position: absolute;
+  top: 10%;
+  height: 60%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.Stats p {
+  text-align: center;
+  font-size: 30px;
+  margin: 0;
 }

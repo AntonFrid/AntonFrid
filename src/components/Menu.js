@@ -13,6 +13,7 @@ class Menu extends React.Component {
 
     this.onClickHome = this.onClickHome.bind(this);
     this.onClickAbout = this.onClickAbout.bind(this);
+    this.onClickStats = this.onClickStats.bind(this);
     this.onFocus = this.onFocus.bind(this);
     this.onBlur = this.onBlur.bind(this);
     this.focusHome = this.focusHome.bind(this);
@@ -23,19 +24,28 @@ class Menu extends React.Component {
 
   onClickHome() {
     if(this.props.home) {
-      this.props.closeMenu()
+      this.props.closeMenu();
     }else {
-      this.props.goHome()
-      this.props.closeMenu()
+      this.props.goHome();
+      this.props.closeMenu();
     }
   }
 
   onClickAbout() {
     if(this.props.about) {
-      this.props.closeMenu()
+      this.props.closeMenu();
     }else {
-      this.props.goAbout()
-      this.props.closeMenu()
+      this.props.goAbout();
+      this.props.closeMenu();
+    }
+  }
+
+  onClickStats() {
+    if(this.props.stats) {
+      this.props.closeMenu();
+    }else {
+      this.props.goStats();
+      this.props.closeMenu();
     }
   }
 
@@ -77,7 +87,7 @@ class Menu extends React.Component {
         <div onMouseOver={ this.onMouseEnter} onMouseOut={ this.onMouseLeave } ref={ this.overlay }onClick={ this.onClickOverlay } className={ this.props.showMenu ? 'Menu__overlay' : 'Menu__overlay__hidden'}>
           <div ref={ this.menu } className={ this.props.showMenu ? 'Menu__visible' : 'Menu__hidden' }>
             <Button ref={ this.homeBtn } onClick={ this.onClickHome } className='Button'>Home screen</Button>
-            <Button className='Button'>Stats</Button>
+            <Button onClick={ this.onClickStats } className='Button'>Stats</Button>
             <Button onClick={ this.onClickAbout } className='Button'>About this app</Button>
           </div>
         </div>

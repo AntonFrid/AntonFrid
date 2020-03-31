@@ -1,5 +1,6 @@
 import React from 'react';
 import 'typeface-roboto';
+import { stats$, updateStats } from '../store.js';
 
 //Components
 import Button from '@material-ui/core/Button';
@@ -12,7 +13,17 @@ class Quiz extends React.Component {
   constructor(props) {
     super(props);
 
+    this.state = { stats: stats$.value };
+
     this.checkAnswers = this.checkAnswers.bind(this);
+  }
+
+  componentDidMount() {
+    this.sub = stats$.subscribe((stats) => this.setState({ stats }));
+  }
+
+  componentWillUnmount() {
+    this.sub.unsubscribe();
   }
 
   shuffle(array) {
@@ -34,8 +45,23 @@ class Quiz extends React.Component {
     for (let i = 0; i < this.props.answersArr.length; i++) {
       if(this.props.answersArr[i] === this.props.quizArr[i].correct_answer) correctCount++;
     }
-
+    console.log(stats$.value);
     this.props.spawnPopup(correctCount);
+
+    if(stats$.value === null) {
+      updateStats({
+         correct: correctCount,
+         total: this.props.amount,
+         played: 1,
+      });
+    }else {
+      updateStats({
+         correct: parseInt(correctCount) + parseInt(this.state.stats.correct),
+         total: parseInt(this.props.amount) + parseInt(this.state.stats.total),
+         played: parseInt(this.state.stats.played) + 1,
+      });
+    }
+
   }
 
   convertHTML(str) {

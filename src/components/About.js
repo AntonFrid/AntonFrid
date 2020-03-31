@@ -14,6 +14,7 @@ class About extends React.Component {
           Vestibulum condimentum nulla non erat aliquam, nec tempus elit dignissim.
           Nam id dignissim dui. Donec metus lectus, eleifend ut tempor ac, feugiat vel est.
         </p>
+        <p className='About__copyright'>Lorem Ipsum ©</p>
       </div>
     );
   }

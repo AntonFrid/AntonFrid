@@ -13,6 +13,7 @@ import Header from './components/Header.js';
 import Popup from './components/Popup.js';
 import Menu from './components/Menu.js';
 import About from './components/About.js';
+import Stats from './components/Stats.js';
 import BeatLoader from "react-spinners/BeatLoader";
 import { MuiThemeProvider as ThemeProvider  } from '@material-ui/core/styles';
 import FocusTrap from 'focus-trap-react';
@@ -32,6 +33,7 @@ class App extends React.Component {
       loading: false,
       fade: true,
       about: false,
+      stats: false,
     };
 
     this.answersArr = [];
@@ -61,6 +63,7 @@ class App extends React.Component {
     this.toggleMenu = this.toggleMenu.bind(this);
     this.switchHome = this.switchHome.bind(this);
     this.switchAbout = this.switchAbout.bind(this);
+    this.switchStats = this.switchStats.bind(this);
     this.fetchQuiz = this.fetchQuiz.bind(this);
     this.addAnswer = this.addAnswer.bind(this);
     this.changeQuestionAmount = this.changeQuestionAmount.bind(this);
@@ -98,7 +101,7 @@ class App extends React.Component {
       this.setState({ home: false });
     }else {
       this.answersArr = [];
-      this.setState({ home: true, about: false, quizArr: [], correctCount: 0 })
+      this.setState({ home: true, stats: false, about: false, quizArr: [], correctCount: 0 })
     }
   }
 
@@ -107,7 +110,16 @@ class App extends React.Component {
       this.setState({ about: false });
     }else {
       this.answersArr = [];
-      this.setState({ about: true, home: false, quizArr: [], correctCount: 0 })
+      this.setState({ about: true, stats: false, home: false, quizArr: [], correctCount: 0 })
+    }
+  }
+
+  switchStats() {
+    if(this.state.stats) {
+      this.setState({ stats: false });
+    }else {
+      this.answersArr = [];
+      this.setState({ stats: true, about: false, home: false, quizArr: [], correctCount: 0 })
     }
   }
 
@@ -150,12 +162,12 @@ class App extends React.Component {
                   page={ {
                     home: this.state.home,
                     about: this.state.about,
-                    stats: false,
+                    stats: this.state.stats,
                     menu: this.state.menu,
                   } }
                   toggleMenu={ this.toggleMenu }
                 />
-                <Menu about={ this.state.about } home={ this.state.home } closeMenu={ this.toggleMenu } goAbout={ this.switchAbout } goHome={ this.switchHome } showMenu={ this.state.menu } />
+                <Menu stats={ this.state.stats } about={ this.state.about } home={ this.state.home } closeMenu={ this.toggleMenu } goStats={ this.switchStats } goAbout={ this.switchAbout } goHome={ this.switchHome } showMenu={ this.state.menu } />
               </div>
             </FocusTrap>
             <Router>
@@ -167,9 +179,14 @@ class App extends React.Component {
                 ? <Redirect to='/about'/>
                 : null
               }
+              { this.state.stats
+                ? <Redirect to='/stats'/>
+                : null
+              }
               <Route exact path='/' render={(props) => <Main updateAmount={ this.changeQuestionAmount } fetchQuiz={ this.fetchQuiz } switchHome={ this.switchHome }/>} />
               <Route path='/quiz' render={(props) => <Quiz onScroll={ this.handleScroll } amount={ this.state.questionAmount } answersArr={ this.answersArr } addAnswer={ this.addAnswer } quizArr={ this.state.quizArr } spawnPopup={ this.spawnPopup }/>} />
               <Route path='/about' render={(props) => <About/>}/>
+              <Route path='/stats' render={(props) => <Stats/>}/>
             </Router>
             <div className={ !this.state.home
                 ? (this.state.fade ? 'fade__overlay' : 'fade__overlay__hidden')
