@@ -27,6 +27,7 @@ class Quiz extends React.Component {
   }
 
   shuffle(array) {
+    if(array.length === 2) return array.sort().reverse();
     return array.sort(() => Math.random() - 0.5);
   }
 
@@ -45,7 +46,7 @@ class Quiz extends React.Component {
     for (let i = 0; i < this.props.answersArr.length; i++) {
       if(this.props.answersArr[i] === this.props.quizArr[i].correct_answer) correctCount++;
     }
-    
+
     this.props.spawnPopup(correctCount);
 
     if(stats$.value === null) {
@@ -89,8 +90,8 @@ class Quiz extends React.Component {
                 return (
                   <div key={'question-' + index} className='Quiz__question'>
                     <h3>Question {index + 1}</h3>
-                    <p>Q{index + 1}. { this.convertHTML(value.question) }</p>
-                    <RadioGroup defaultValue={ answers[0] } aria-label="answers" name={'answers' + index } onChange={ (e) => this.props.addAnswer(e.target.value, index) }>
+                    <p>{ this.convertHTML(value.question) }</p>
+                    <RadioGroup defaultValue={ answers[0] } aria-label={ 'answers question' + (index + 1) } name={'answers' + index } onChange={ (e) => this.props.addAnswer(e.target.value, index) }>
                       { answers.map((value, index) => {
                         return <FormControlLabel key={ value + index } className='Radio__label' value={ value } control={<Radio />} label={ this.convertHTML(value) } />
                       })}

@@ -91,7 +91,7 @@ class Menu extends React.Component {
             <Button onClick={ this.onClickAbout } className='Button'>About this app</Button>
           </div>
         </div>
-        { this.props.showMenu ? <button onBlur={ this.onBlur } onFocus={ this.onFocus } onClick={ this.props.closeMenu } className='hidden__button'></button> : null }
+        { this.props.showMenu ? <button aria-label='closeMenu' onBlur={ this.onBlur } onFocus={ this.onFocus } onClick={ this.props.closeMenu } className='hidden__button'></button> : null }
       </>
   );
   }

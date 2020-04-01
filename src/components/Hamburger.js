@@ -7,7 +7,7 @@ import Button from '@material-ui/core/Button';
 class Hamburger extends React.Component {
   render() {
     return(
-      <Button onClick={ this.props.toggleMenu } className='Button'>
+      <Button aria-label='menu' onClick={ this.props.toggleMenu } className='Button'>
         { this.props.menuBool
             ? <MenuIconOpen size='large' className='Hamburger'/>
             : <MenuIcon size='large' className='Hamburger'/>

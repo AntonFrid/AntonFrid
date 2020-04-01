@@ -191,15 +191,12 @@ p {
 .Header .Button {
   border-radius: 10px;
   margin-left: 2px;
+  margin-right: 2px;
+  transition: 0.15s;
 }
 
 .Hamburger {
   color: white;
-  transition: 0.15s;
-}
-
-.Hamburger:hover {
-  color: #7289da;
   transition: 0.15s;
 }
 
@@ -209,6 +206,17 @@ p {
 }
 
 .Header .Button:focus .Hamburger {
+  color: #7289da;
+  transition: 0.15s;
+}
+
+.Header .Button:hover {
+  color: #7289da;
+  background-color: #424549;
+  transition: 0.15s;
+}
+
+.Header .Button:hover .Hamburger {
   color: #7289da;
   transition: 0.15s;
 }

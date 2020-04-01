@@ -18,11 +18,11 @@ class Popup extends React.Component {
 
   render() {
     return (
-      <div className='Popup'>
+      <div role='dialog' aria-labelledby='dialogTitle' aria-describedby='dialogDesc' className='Popup'>
         <FocusTrap>
           <form>
-            <h3>Congratulations!</h3>
-            <p>You answered { this.props.correctCount }/{ this.props.amount} questions correct!</p>
+            <h3 id='dialogTitle'>Congratulations!</h3>
+            <p id='dialogDesc'>You answered { this.props.correctCount } out of { this.props.amount } questions correct!</p>
             <div className='Button__wrap'>
               <Button onClick={ this.restart } className='Button'>Restart</Button>
               <Button onClick={ this.props.close } className='Button'>Close</Button>
